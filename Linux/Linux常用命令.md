@@ -16,7 +16,7 @@
     *  `vi /etc/syscongif/network-scripts/ifcfg-xx`
     *  `apt-get install net-tools`
 * 查看配置: `cat /proc/cpuinfo`
-* 
+* `fdisk`
 
 
 ## 三、文件操作命令
