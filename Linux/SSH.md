@@ -13,7 +13,7 @@
 
 
 ## SSH config 配置
-* config存放在 `~/.ssh/config`
+* config存放在 `~/.ssh/config`,在这里配置可以用别名代替ip地址
 * SSH config语法关键字
     * Host: 别名
     * HostName: 主机名
