@@ -1,0 +1,568 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0073)http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92 -->
+<html lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Softmax回归 - Ufldl</title>
+
+<meta name="generator" content="MediaWiki 1.16.2">
+<link rel="shortcut icon" href="http://deeplearning.stanford.edu/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="http://deeplearning.stanford.edu/wiki/opensearch_desc.php" title="Ufldl (en)">
+<link rel="alternate" type="application/atom+xml" title="Ufldl Atom feed" href="http://deeplearning.stanford.edu/wiki/index.php?title=Special:RecentChanges&amp;feed=atom">
+<link rel="stylesheet" href="./Softmax回归 - Ufldl_files/shared.css" media="screen">
+<link rel="stylesheet" href="./Softmax回归 - Ufldl_files/commonPrint.css" media="print">
+<link rel="stylesheet" href="./Softmax回归 - Ufldl_files/main.css" media="screen">
+<!--[if lt IE 5.5000]><link rel="stylesheet" href="/wiki/skins/monobook/IE50Fixes.css?270" media="screen" /><![endif]-->
+<!--[if IE 5.5000]><link rel="stylesheet" href="/wiki/skins/monobook/IE55Fixes.css?270" media="screen" /><![endif]-->
+<!--[if IE 6]><link rel="stylesheet" href="/wiki/skins/monobook/IE60Fixes.css?270" media="screen" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" href="/wiki/skins/monobook/IE70Fixes.css?270" media="screen" /><![endif]-->
+<link rel="stylesheet" href="./Softmax回归 - Ufldl_files/index.php">
+<link rel="stylesheet" href="./Softmax回归 - Ufldl_files/index(1).php" media="print">
+<link rel="stylesheet" href="./Softmax回归 - Ufldl_files/index(2).php">
+<link rel="stylesheet" href="./Softmax回归 - Ufldl_files/index(3).php">
+<script>
+var skin="monobook",
+stylepath="/wiki/skins",
+wgUrlProtocols="http\\:\\/\\/|https\\:\\/\\/|ftp\\:\\/\\/|irc\\:\\/\\/|gopher\\:\\/\\/|telnet\\:\\/\\/|nntp\\:\\/\\/|worldwind\\:\\/\\/|mailto\\:|news\\:|svn\\:\\/\\/",
+wgArticlePath="/wiki/index.php/$1",
+wgScriptPath="/wiki",
+wgScriptExtension=".php",
+wgScript="/wiki/index.php",
+wgVariantArticlePath=false,
+wgActionPaths={},
+wgServer="http://deeplearning.stanford.edu",
+wgCanonicalNamespace="",
+wgCanonicalSpecialPageName=false,
+wgNamespaceNumber=0,
+wgPageName="Softmax回归",
+wgTitle="Softmax回归",
+wgAction="view",
+wgArticleId=484,
+wgIsArticle=true,
+wgUserName=null,
+wgUserGroups=null,
+wgUserLanguage="en",
+wgContentLanguage="en",
+wgBreakFrames=false,
+wgCurRevisionId=2360,
+wgVersion="1.16.2",
+wgEnableAPI=true,
+wgEnableWriteAPI=true,
+wgSeparatorTransformTable=["", ""],
+wgDigitTransformTable=["", ""],
+wgMainPageTitle="Main Page",
+wgFormattedNamespaces={"-2": "Media", "-1": "Special", "0": "", "1": "Talk", "2": "User", "3": "User talk", "4": "Ufldl", "5": "Ufldl talk", "6": "File", "7": "File talk", "8": "MediaWiki", "9": "MediaWiki talk", "10": "Template", "11": "Template talk", "12": "Help", "13": "Help talk", "14": "Category", "15": "Category talk"},
+wgNamespaceIds={"media": -2, "special": -1, "": 0, "talk": 1, "user": 2, "user_talk": 3, "ufldl": 4, "ufldl_talk": 5, "file": 6, "file_talk": 7, "mediawiki": 8, "mediawiki_talk": 9, "template": 10, "template_talk": 11, "help": 12, "help_talk": 13, "category": 14, "category_talk": 15, "image": 6, "image_talk": 7},
+wgSiteName="Ufldl",
+wgCategories=[],
+wgRestrictionEdit=[],
+wgRestrictionMove=[];
+</script><style type="text/css" abt="234"></style><script src="./Softmax回归 - Ufldl_files/wikibits.js.下载"></script>
+<script src="./Softmax回归 - Ufldl_files/ajax.js.下载"></script>
+<script src="./Softmax回归 - Ufldl_files/index(4).php"></script>
+
+<script>//remove 17173 video ad
+doAdblock();
+function doAdblock(){
+    (function() {
+        function A() {}
+        A.prototype = {
+            rules: {
+                '17173_in':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_in_20150522.swf"
+                },
+                '17173_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_out_20150522.swf"
+                },
+                '17173_live':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_stream_20150522.swf"
+                },
+                '17173_live_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173.out.Live.swf"
+                }
+            },
+            _done: null,
+            get done() {
+                if(!this._done) {
+                    this._done = new Array();
+                }
+                return this._done;
+            },
+            addAnimations: function() {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            },
+            animationsHandler: function(e) {
+                if(e.animationName === 'playerInserted') {
+                    this.replace(e.target);
+                }
+            },
+            replace: function(elem) {
+                if(this.done.indexOf(elem) != -1) return;
+                this.done.push(elem);
+                var player = elem.data || elem.src;
+                if(!player) return;
+                var i, find, replace = false;
+                for(i in this.rules) {
+                    find = this.rules[i]['find'];
+                    if(find.test(player)) {
+                        replace = this.rules[i]['replace'];
+                        if('function' === typeof this.rules[i]['preHandle']) {
+                            this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                        }else{
+                            this.reallyReplace.bind(this, elem, find, replace)();
+                        }
+                        break;
+                    }
+                }
+            },
+            reallyReplace: function(elem, find, replace) {
+                elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+                var b = elem.querySelector("param[name='movie']");
+                this.reloadPlugin(elem);
+            },
+            reloadPlugin: function(elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                var newElem = elem.cloneNode(true);
+                this.done.push(newElem);
+                if(nextSibling) {
+                    parentNode.insertBefore(newElem, nextSibling);
+                } else {
+                    parentNode.appendChild(newElem);
+                }
+            },
+            init: function() {
+                var handler = this.animationsHandler.bind(this);
+                document.body.addEventListener('webkitAnimationStart', handler, false);
+                document.body.addEventListener('msAnimationStart', handler, false);
+                document.body.addEventListener('oAnimationStart', handler, false);
+                document.body.addEventListener('animationstart', handler, false);
+                this.addAnimations();
+            }
+        };
+        new A().init();
+    })();
+}
+//remove baidu search ad
+if(document.URL.indexOf('www.baidu.com') >= 0){
+    if(document && document.getElementsByTagName && document.getElementById && document.body){
+        var aa = function(){
+            var all = document.body.querySelectorAll("#content_left div,#content_left table");
+            for(var i = 0; i < all.length; i++){
+                if(/display:\s?(table|block)\s!important/.test(all[i].getAttribute("style"))){all[i].style.display= "none";all[i].style.visibility='hidden';}
+            }
+            all = document.body.querySelectorAll('.result.c-container[id="1"]');
+            //if(all.length == 1) return;
+            for(var i = 0; i < all.length; i++){
+                if(all[i].innerHTML && all[i].innerHTML.indexOf('广告')>-1){
+                    all[i].style.display= "none";all[i].style.visibility='hidden';
+                }
+            }
+        }
+        aa();
+        document.getElementById('wrapper_wrapper').addEventListener('DOMSubtreeModified',aa)
+    };
+}
+//remove sohu video ad
+if (document.URL.indexOf("tv.sohu.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+//remove 56.com video ad
+if (document.URL.indexOf("56.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+//fore iqiyi enable html5 player function
+if (document.URL.indexOf("iqiyi.com") >= 0){
+    if (document.cookie.indexOf("player_forcedType=h5_VOD")==-1){
+        document.cookie='player_forcedType=h5_VOD'
+        if(localStorage.reloadTime && Date.now() - parseInt(localStorage.reloadTime)<60000){
+            console.log('no reload')
+        }else{
+            location.reload()
+            localStorage.reloadTime = Date.now();
+        }
+    }
+}
+</script><style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head><remove-web-limits-iqxin id="rwl-iqxin" class="rwl-exempt" style="position: fixed; top: 0px; left: 0px;"><button type="button" id="rwl-setbtn"> set </button> <lalala style="cursor:move;">限制解除</lalala> <input type="checkbox" name="" id="black_node"><style type="text/css">#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} </style></remove-web-limits-iqxin>
+<body class="mediawiki ltr ns-0 ns-subject page-Softmax回归 skin-monobook"><div id="StayFocusd-infobar" style="display: none; top: 1409px;">
+    <img src="chrome-extension://laankejkbhbdhmipfmgcngdelahlfoji/common/img/eye_19x19_red.png">
+    <span id="StayFocusd-infobar-msg"></span>
+    <span id="StayFocusd-infobar-links">
+        <a id="StayFocusd-infobar-never-show">hide forever</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a id="StayFocusd-infobar-hide">hide once</a>
+    </span>
+</div>
+<div id="globalWrapper">
+<div id="column-content"><div id="content">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading">Softmax回归</h1>
+	<div id="bodyContent">
+		<h3 id="siteSub">From Ufldl</h3>
+		<div id="contentSub"></div>
+		<div id="jump-to-nav">Jump to: <a href="http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92#column-one">navigation</a>, <a href="http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92#searchInput">search</a></div>
+		<!-- start content -->
+<table id="toc" class="toc"><tbody><tr><td><div id="toctitle"><h2>Contents</h2> <span class="toctoggle">[<a id="togglelink" class="internal" href="javascript:toggleToc()">hide</a>]</span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92#.E7.AE.80.E4.BB.8B"><span class="tocnumber">1</span> <span class="toctext">简介</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92#.E4.BB.A3.E4.BB.B7.E5.87.BD.E6.95.B0"><span class="tocnumber">2</span> <span class="toctext">代价函数</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92#Softmax.E5.9B.9E.E5.BD.92.E6.A8.A1.E5.9E.8B.E5.8F.82.E6.95.B0.E5.8C.96.E7.9A.84.E7.89.B9.E7.82.B9"><span class="tocnumber">3</span> <span class="toctext">Softmax回归模型参数化的特点</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92#.E6.9D.83.E9.87.8D.E8.A1.B0.E5.87.8F"><span class="tocnumber">4</span> <span class="toctext">权重衰减</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92#Softmax.E5.9B.9E.E5.BD.92.E4.B8.8ELogistic_.E5.9B.9E.E5.BD.92.E7.9A.84.E5.85.B3.E7.B3.BB"><span class="tocnumber">5</span> <span class="toctext">Softmax回归与Logistic 回归的关系</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92#Softmax_.E5.9B.9E.E5.BD.92_vs._k_.E4.B8.AA.E4.BA.8C.E5.85.83.E5.88.86.E7.B1.BB.E5.99.A8"><span class="tocnumber">6</span> <span class="toctext">Softmax 回归 vs. k 个二元分类器</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92#.E4.B8.AD.E8.8B.B1.E6.96.87.E5.AF.B9.E7.85.A7"><span class="tocnumber">7</span> <span class="toctext">中英文对照</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92#.E4.B8.AD.E6.96.87.E8.AF.91.E8.80.85"><span class="tocnumber">8</span> <span class="toctext">中文译者</span></a></li>
+</ul>
+</td></tr></tbody></table><script>if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<h2> <span class="mw-headline" id=".E7.AE.80.E4.BB.8B">简介</span></h2>
+<p>在本节中，我们介绍Softmax回归模型，该模型是logistic回归模型在多分类问题上的推广，在多分类问题中，类标签 <img class="tex" alt="\textstyle y" src="./Softmax回归 - Ufldl_files/c81e76c28ed991b22b8c1bb8fa392701.png"> 可以取两个以上的值。 Softmax回归模型对于诸如MNIST手写数字分类等问题是很有用的，该问题的目的是辨识10个不同的单个数字。Softmax回归是有监督的，不过后面也会介绍它与深度学习/无监督学习方法的结合。（译者注： MNIST 是一个手写数字识别库，由NYU 的Yann LeCun 等人维护。<a href="http://yann.lecun.com/exdb/mnist/" class="external free" rel="nofollow">http://yann.lecun.com/exdb/mnist/</a> ）
+</p><p><br>
+回想一下在 logistic 回归中，我们的训练集由 <img class="tex" alt="\textstyle m" src="./Softmax回归 - Ufldl_files/25e97e8a905fc2cb05d76cd4872a8567.png"> 个已标记的样本构成：<img class="tex" alt="\{ (x^{(1)}, y^{(1)}), \ldots, (x^{(m)}, y^{(m)}) \}" src="./Softmax回归 - Ufldl_files/5ec89e9cf3712d45b80e93258352ea8f.png"> ，其中输入特征<img class="tex" alt="x^{(i)} \in \Re^{n+1}" src="./Softmax回归 - Ufldl_files/123c8ca74aa217158129b671fc7e75a8.png">。（我们对符号的约定如下：特征向量 <img class="tex" alt="\textstyle x" src="./Softmax回归 - Ufldl_files/f6c0f8758a1eb9c99c0bbe309ff2c5a5.png"> 的维度为 <img class="tex" alt="\textstyle n+1" src="./Softmax回归 - Ufldl_files/ce988241166226ec379ecdfb009cc5c6.png">，其中 <img class="tex" alt="\textstyle x_0 = 1" src="./Softmax回归 - Ufldl_files/c582053ce9cb63d69ae80acb53ded0d3.png"> 对应截距项 。） 由于 logistic 回归是针对二分类问题的，因此类标记 <img class="tex" alt="y^{(i)} \in \{0,1\}" src="./Softmax回归 - Ufldl_files/a589c252daed983404e6f9b3b1219954.png">。假设函数(hypothesis function) 如下：
+</p>
+<dl><dd><img class="tex" alt="\begin{align}
+h_\theta(x) = \frac{1}{1+\exp(-\theta^Tx)},
+\end{align}" src="./Softmax回归 - Ufldl_files/bb3791d463b832a88731b94f1d8e5279.png">
+</dd></dl>
+<p><br>
+我们将训练模型参数 <img class="tex" alt="\textstyle \theta" src="./Softmax回归 - Ufldl_files/69d920fe8e1da0543eb63d1097f21754.png">，使其能够最小化代价函数 ：
+</p>
+<dl><dd><img class="tex" alt="
+\begin{align}
+J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m y^{(i)} \log h_\theta(x^{(i)}) + (1-y^{(i)}) \log (1-h_\theta(x^{(i)})) \right]
+\end{align}
+" src="./Softmax回归 - Ufldl_files/fa6565f1e7b91831e306ec404ccc1156.png">
+</dd></dl>
+<p><br>
+在 softmax回归中，我们解决的是多分类问题（相对于 logistic 回归解决的二分类问题），类标 <img class="tex" alt="\textstyle y" src="./Softmax回归 - Ufldl_files/c81e76c28ed991b22b8c1bb8fa392701.png"> 可以取 <img class="tex" alt="\textstyle k" src="./Softmax回归 - Ufldl_files/b0066e761791cae480158b649e5f5a69.png"> 个不同的值（而不是 2 个）。因此，对于训练集 <img class="tex" alt="\{ (x^{(1)}, y^{(1)}), \ldots, (x^{(m)}, y^{(m)}) \}" src="./Softmax回归 - Ufldl_files/5ec89e9cf3712d45b80e93258352ea8f.png">，我们有 <img class="tex" alt="y^{(i)} \in \{1, 2, \ldots, k\}" src="./Softmax回归 - Ufldl_files/7dc095cfb7e3e1fc6bdbc358bd3e2888.png">。（注意此处的类别下标从 1 开始，而不是 0）。例如，在 MNIST 数字识别任务中，我们有 <img class="tex" alt="\textstyle k=10" src="./Softmax回归 - Ufldl_files/1b84ec945b47439de6a73660b826df20.png"> 个不同的类别。
+</p><p><br>
+对于给定的测试输入 <img class="tex" alt="\textstyle x" src="./Softmax回归 - Ufldl_files/f6c0f8758a1eb9c99c0bbe309ff2c5a5.png">，我们想用假设函数针对每一个类别j估算出概率值 <img class="tex" alt="\textstyle p(y=j | x)" src="./Softmax回归 - Ufldl_files/c1d5aaee0724f2183116cb8860f1b9e4.png">。也就是说，我们想估计 <img class="tex" alt="\textstyle x" src="./Softmax回归 - Ufldl_files/f6c0f8758a1eb9c99c0bbe309ff2c5a5.png"> 的每一种分类结果出现的概率。因此，我们的假设函数将要输出一个 <img class="tex" alt="\textstyle k" src="./Softmax回归 - Ufldl_files/b0066e761791cae480158b649e5f5a69.png"> 维的向量（向量元素的和为1）来表示这 <img class="tex" alt="\textstyle k" src="./Softmax回归 - Ufldl_files/b0066e761791cae480158b649e5f5a69.png"> 个估计的概率值。 具体地说，我们的假设函数 <img class="tex" alt="\textstyle h_{\theta}(x)" src="./Softmax回归 - Ufldl_files/887e72d0a7b7eb5083120e23a909a554.png"> 形式如下：
+</p>
+<dl><dd><img class="tex" alt="
+\begin{align}
+h_\theta(x^{(i)}) =
+\begin{bmatrix}
+p(y^{(i)} = 1 | x^{(i)}; \theta) \\
+p(y^{(i)} = 2 | x^{(i)}; \theta) \\
+\vdots \\
+p(y^{(i)} = k | x^{(i)}; \theta)
+\end{bmatrix}
+=
+\frac{1}{ \sum_{j=1}^{k}{e^{ \theta_j^T x^{(i)} }} }
+\begin{bmatrix}
+e^{ \theta_1^T x^{(i)} } \\
+e^{ \theta_2^T x^{(i)} } \\
+\vdots \\
+e^{ \theta_k^T x^{(i)} } \\
+\end{bmatrix}
+\end{align}
+" src="./Softmax回归 - Ufldl_files/a1b0d7b40fe624cd8a24354792223a9d.png">
+</dd></dl>
+<p><br>
+其中 <img class="tex" alt="\theta_1, \theta_2, \ldots, \theta_k \in \Re^{n+1}" src="./Softmax回归 - Ufldl_files/fd93be6ab8e2b869691579202d7b4417.png"> 是模型的参数。请注意 <img class="tex" alt="\frac{1}{ \sum_{j=1}^{k}{e^{ \theta_j^T x^{(i)} }} } " src="./Softmax回归 - Ufldl_files/aab84964dbe1a2f77c9c91327ea0d6d6.png">这一项对概率分布进行归一化，使得所有概率之和为 1 。
+</p><p><br>
+为了方便起见，我们同样使用符号 <img class="tex" alt="\textstyle \theta" src="./Softmax回归 - Ufldl_files/69d920fe8e1da0543eb63d1097f21754.png"> 来表示全部的模型参数。在实现Softmax回归时，将 <img class="tex" alt="\textstyle \theta" src="./Softmax回归 - Ufldl_files/69d920fe8e1da0543eb63d1097f21754.png"> 用一个 <img class="tex" alt="\textstyle k \times(n+1)" src="./Softmax回归 - Ufldl_files/8d75ffcaca20bce5c66ae0ffe2facfc3.png"> 的矩阵来表示会很方便，该矩阵是将 <img class="tex" alt="\theta_1, \theta_2, \ldots, \theta_k" src="./Softmax回归 - Ufldl_files/1ff687194349ee543cd4f1baa7bcaa58.png"> 按行罗列起来得到的，如下所示：
+</p>
+<dl><dd><img class="tex" alt="
+\theta = \begin{bmatrix}
+\mbox{---} \theta_1^T \mbox{---} \\
+\mbox{---} \theta_2^T \mbox{---} \\
+\vdots \\
+\mbox{---} \theta_k^T \mbox{---} \\
+\end{bmatrix}
+" src="./Softmax回归 - Ufldl_files/ab4ba0d1df4b93696eec7d8bef86e9cd.png">
+</dd></dl>
+<p><br>
+</p>
+<h2> <span class="mw-headline" id=".E4.BB.A3.E4.BB.B7.E5.87.BD.E6.95.B0"> 代价函数</span></h2>
+<p>现在我们来介绍 softmax 回归算法的代价函数。在下面的公式中，<img class="tex" alt="\textstyle 1\{\cdot\}" src="./Softmax回归 - Ufldl_files/b279688f53460dc80e6a81235beee14d.png"> 是示性函数，其取值规则为：
+</p>
+<pre><img class="tex" alt="\textstyle 1\{" src="./Softmax回归 - Ufldl_files/25481caeef48c5fa12aa22988d931716.png"> 值为真的表达式 <img class="tex" alt="\textstyle \}=1" src="./Softmax回归 - Ufldl_files/dd00eb7d2f81be87621392c299eb4b52.png">
+</pre>
+<p>， <img class="tex" alt="\textstyle 1\{" src="./Softmax回归 - Ufldl_files/25481caeef48c5fa12aa22988d931716.png"> 值为假的表达式 <img class="tex" alt="\textstyle \}=0" src="./Softmax回归 - Ufldl_files/11274c6dbf36bae0b02acd07555f4ce7.png">。举例来说，表达式 <img class="tex" alt="\textstyle 1\{2+2=4\}" src="./Softmax回归 - Ufldl_files/68118d4cdfdbe134b420cc4031f3c46e.png"> 的值为1 ，<img class="tex" alt="\textstyle 1\{1+1=5\}" src="./Softmax回归 - Ufldl_files/45f90c8f2e9a8d2f00dff993e45c9dbd.png">的值为 0。我们的代价函数为：
+</p>
+<dl><dd><img class="tex" alt="
+\begin{align}
+J(\theta) = - \frac{1}{m} \left[ \sum_{i=1}^{m} \sum_{j=1}^{k}  1\left\{y^{(i)} = j\right\} \log \frac{e^{\theta_j^T x^{(i)}}}{\sum_{l=1}^k e^{ \theta_l^T x^{(i)} }}\right]
+\end{align}
+" src="./Softmax回归 - Ufldl_files/7634eb3b08dc003aa4591a95824d4fbd.png">
+</dd></dl>
+<p><br>
+值得注意的是，上述公式是logistic回归代价函数的推广。logistic回归代价函数可以改为：
+</p>
+<dl><dd><img class="tex" alt="
+\begin{align}
+J(\theta) &amp;= -\frac{1}{m} \left[ \sum_{i=1}^m   (1-y^{(i)}) \log (1-h_\theta(x^{(i)})) + y^{(i)} \log h_\theta(x^{(i)}) \right] \\
+&amp;= - \frac{1}{m} \left[ \sum_{i=1}^{m} \sum_{j=0}^{1} 1\left\{y^{(i)} = j\right\} \log p(y^{(i)} = j | x^{(i)} ; \theta) \right]
+\end{align}
+" src="./Softmax回归 - Ufldl_files/5491271f19161f8ea6a6b2a82c83fc3a.png">
+</dd></dl>
+<p><br>
+可以看到，Softmax代价函数与logistic 代价函数在形式上非常类似，只是在Softmax损失函数中对类标记的 <img class="tex" alt="\textstyle k" src="./Softmax回归 - Ufldl_files/b0066e761791cae480158b649e5f5a69.png"> 个可能值进行了累加。注意在Softmax回归中将 <img class="tex" alt="\textstyle x" src="./Softmax回归 - Ufldl_files/f6c0f8758a1eb9c99c0bbe309ff2c5a5.png"> 分类为类别 <img class="tex" alt="\textstyle j" src="./Softmax回归 - Ufldl_files/235c5146ab110558897640c34dad7d97.png"> 的概率为：
+</p>
+<dl><dd><img class="tex" alt="
+p(y^{(i)} = j | x^{(i)} ; \theta) = \frac{e^{\theta_j^T x^{(i)}}}{\sum_{l=1}^k e^{ \theta_l^T x^{(i)}} }
+" src="./Softmax回归 - Ufldl_files/a2e69ec139cdd4828130c175d990d4e3.png">.
+</dd></dl>
+<p><br>
+对于 <img class="tex" alt="\textstyle J(\theta)" src="./Softmax回归 - Ufldl_files/ce027336c1cb3c0cd461406c81369ebf.png"> 的最小化问题，目前还没有闭式解法。因此，我们使用迭代的优化算法（例如梯度下降法，或 L-BFGS）。经过求导，我们得到梯度公式如下：
+</p>
+<dl><dd><img class="tex" alt="
+\begin{align}
+\nabla_{\theta_j} J(\theta) = - \frac{1}{m} \sum_{i=1}^{m}{ \left[ x^{(i)} \left( 1\{ y^{(i)} = j\}  - p(y^{(i)} = j | x^{(i)}; \theta) \right) \right]  }
+\end{align}
+" src="./Softmax回归 - Ufldl_files/59ef406cef112eb75e54808b560587c9.png">
+</dd></dl>
+<p><br>
+让我们来回顾一下符号 "<img class="tex" alt="\textstyle \nabla_{\theta_j}" src="./Softmax回归 - Ufldl_files/b82b3c09d8bae5495cd4f9e6dedb8710.png">" 的含义。<img class="tex" alt="\textstyle \nabla_{\theta_j} J(\theta)" src="./Softmax回归 - Ufldl_files/514656111f9d351a9e2260d7630ea95b.png"> 本身是一个向量，它的第 <img class="tex" alt="\textstyle l" src="./Softmax回归 - Ufldl_files/ba0593b3db2fa8535b077516f4b0d70b.png"> 个元素 <img class="tex" alt="\textstyle \frac{\partial J(\theta)}{\partial \theta_{jl}}" src="./Softmax回归 - Ufldl_files/3f886a15270b25ffd60003f2d037bcc4.png"> 是 <img class="tex" alt="\textstyle J(\theta)" src="./Softmax回归 - Ufldl_files/ce027336c1cb3c0cd461406c81369ebf.png">对<img class="tex" alt="\textstyle \theta_j" src="./Softmax回归 - Ufldl_files/37e2eaf89c7b1f26381f438a0367099a.png"> 的第 <img class="tex" alt="\textstyle l" src="./Softmax回归 - Ufldl_files/ba0593b3db2fa8535b077516f4b0d70b.png"> 个分量的偏导数。
+</p><p><br>
+有了上面的偏导数公式以后，我们就可以将它代入到梯度下降法等算法中，来最小化 <img class="tex" alt="\textstyle J(\theta)" src="./Softmax回归 - Ufldl_files/ce027336c1cb3c0cd461406c81369ebf.png">。 例如，在梯度下降法的标准实现中，每一次迭代需要进行如下更新: <img class="tex" alt="\textstyle \theta_j := \theta_j - \alpha \nabla_{\theta_j} J(\theta)" src="./Softmax回归 - Ufldl_files/ab87ee11f99bda3dc7485ac1f009e5a4.png">(<img class="tex" alt="\textstyle j=1,\ldots,k" src="./Softmax回归 - Ufldl_files/83aaa94ba392e98b15d29ed67fdaae12.png">）。
+</p><p>当实现 softmax 回归算法时， 我们通常会使用上述代价函数的一个改进版本。具体来说，就是和权重衰减(weight decay)一起使用。我们接下来介绍使用它的动机和细节。
+</p><p><br>
+</p>
+<h2> <span class="mw-headline" id="Softmax.E5.9B.9E.E5.BD.92.E6.A8.A1.E5.9E.8B.E5.8F.82.E6.95.B0.E5.8C.96.E7.9A.84.E7.89.B9.E7.82.B9"> Softmax回归模型参数化的特点</span></h2>
+<p>Softmax 回归有一个不寻常的特点：它有一个“冗余”的参数集。为了便于阐述这一特点，假设我们从参数向量 <img class="tex" alt="\textstyle \theta_j" src="./Softmax回归 - Ufldl_files/37e2eaf89c7b1f26381f438a0367099a.png"> 中减去了向量 <img class="tex" alt="\textstyle \psi" src="./Softmax回归 - Ufldl_files/200d05b77b27ed6a0aa466165f660b64.png">，这时，每一个 <img class="tex" alt="\textstyle \theta_j" src="./Softmax回归 - Ufldl_files/37e2eaf89c7b1f26381f438a0367099a.png"> 都变成了 <img class="tex" alt="\textstyle \theta_j - \psi" src="./Softmax回归 - Ufldl_files/9b8020b23b66a91888062b4a9d8902c5.png">(<img class="tex" alt="\textstyle j=1, \ldots, k" src="./Softmax回归 - Ufldl_files/83aaa94ba392e98b15d29ed67fdaae12.png">)。此时假设函数变成了以下的式子：
+</p>
+<dl><dd><img class="tex" alt="
+\begin{align}
+p(y^{(i)} = j | x^{(i)} ; \theta)
+&amp;= \frac{e^{(\theta_j-\psi)^T x^{(i)}}}{\sum_{l=1}^k e^{ (\theta_l-\psi)^T x^{(i)}}}  \\
+&amp;= \frac{e^{\theta_j^T x^{(i)}} e^{-\psi^Tx^{(i)}}}{\sum_{l=1}^k e^{\theta_l^T x^{(i)}} e^{-\psi^Tx^{(i)}}} \\
+&amp;= \frac{e^{\theta_j^T x^{(i)}}}{\sum_{l=1}^k e^{ \theta_l^T x^{(i)}}}.
+\end{align}
+" src="./Softmax回归 - Ufldl_files/d8076908fb40b49db821dc410b03700f.png">
+</dd></dl>
+<p><br>
+换句话说，从 <img class="tex" alt="\textstyle \theta_j" src="./Softmax回归 - Ufldl_files/37e2eaf89c7b1f26381f438a0367099a.png"> 中减去 <img class="tex" alt="\textstyle \psi" src="./Softmax回归 - Ufldl_files/200d05b77b27ed6a0aa466165f660b64.png"> 完全不影响假设函数的预测结果！这表明前面的 softmax 回归模型中存在冗余的参数。更正式一点来说， Softmax 模型被过度参数化了。对于任意一个用于拟合数据的假设函数，可以求出多组参数值，这些参数得到的是完全相同的假设函数 <img class="tex" alt="\textstyle h_\theta" src="./Softmax回归 - Ufldl_files/32b8c2324fe254830c693b4e9a62cad6.png">。
+</p><p><br>
+进一步而言，如果参数 <img class="tex" alt="\textstyle (\theta_1, \theta_2,\ldots, \theta_k)" src="./Softmax回归 - Ufldl_files/6b8d6eff611b23105ff5876c348e19b2.png"> 是代价函数 <img class="tex" alt="\textstyle J(\theta)" src="./Softmax回归 - Ufldl_files/ce027336c1cb3c0cd461406c81369ebf.png"> 的极小值点，那么 <img class="tex" alt="\textstyle (\theta_1 - \psi, \theta_2 - \psi,\ldots,
+\theta_k - \psi)" src="./Softmax回归 - Ufldl_files/ed3ccb28d5145b361d3396fca429a751.png"> 同样也是它的极小值点，其中 <img class="tex" alt="\textstyle \psi" src="./Softmax回归 - Ufldl_files/200d05b77b27ed6a0aa466165f660b64.png"> 可以为任意向量。因此使 <img class="tex" alt="\textstyle J(\theta)" src="./Softmax回归 - Ufldl_files/ce027336c1cb3c0cd461406c81369ebf.png"> 最小化的解不是唯一的。（有趣的是，由于 <img class="tex" alt="\textstyle J(\theta)" src="./Softmax回归 - Ufldl_files/ce027336c1cb3c0cd461406c81369ebf.png"> 仍然是一个凸函数，因此梯度下降时不会遇到局部最优解的问题。但是 Hessian 矩阵是奇异的/不可逆的，这会直接导致采用牛顿法优化就遇到数值计算的问题）
+</p><p><br>
+注意，当 <img class="tex" alt="\textstyle \psi = \theta_1" src="./Softmax回归 - Ufldl_files/5068a95b00ca4021de31c92d1b9265eb.png"> 时，我们总是可以将 <img class="tex" alt="\textstyle \theta_1" src="./Softmax回归 - Ufldl_files/f538938bbd1f7000bcc2c9d990d53632.png">替换为<img class="tex" alt="\textstyle \theta_1 - \psi = \vec{0}" src="./Softmax回归 - Ufldl_files/319e4c877c28268136c857140c74ac9b.png">（即替换为全零向量），并且这种变换不会影响假设函数。因此我们可以去掉参数向量 <img class="tex" alt="\textstyle \theta_1" src="./Softmax回归 - Ufldl_files/f538938bbd1f7000bcc2c9d990d53632.png"> （或者其他 <img class="tex" alt="\textstyle \theta_j" src="./Softmax回归 - Ufldl_files/37e2eaf89c7b1f26381f438a0367099a.png"> 中的任意一个）而不影响假设函数的表达能力。实际上，与其优化全部的 <img class="tex" alt="\textstyle k\times(n+1)" src="./Softmax回归 - Ufldl_files/8d75ffcaca20bce5c66ae0ffe2facfc3.png"> 个参数 <img class="tex" alt="\textstyle (\theta_1, \theta_2,\ldots, \theta_k)" src="./Softmax回归 - Ufldl_files/6b8d6eff611b23105ff5876c348e19b2.png"> （其中 <img class="tex" alt="\textstyle \theta_j \in \Re^{n+1}" src="./Softmax回归 - Ufldl_files/8666911627e8b85075b73dc6a733370c.png">），我们可以令 <img class="tex" alt="\textstyle \theta_1 =
+\vec{0}" src="./Softmax回归 - Ufldl_files/2c83f9d4b80eed256b1802eb58e42d7c.png">，只优化剩余的 <img class="tex" alt="\textstyle (k-1)\times(n+1)" src="./Softmax回归 - Ufldl_files/9f8501030105bc8082adfcbee57888f1.png"> 个参数，这样算法依然能够正常工作。
+</p><p><br>
+在实际应用中，为了使算法实现更简单清楚，往往保留所有参数 <img class="tex" alt="\textstyle (\theta_1, \theta_2,\ldots, \theta_n)" src="./Softmax回归 - Ufldl_files/448d6ac6c1934448db184f3ef3c78623.png">，而不任意地将某一参数设置为 0。但此时我们需要对代价函数做一个改动：加入权重衰减。权重衰减可以解决 softmax 回归的参数冗余所带来的数值问题。
+</p><p><br>
+</p>
+<h2> <span class="mw-headline" id=".E6.9D.83.E9.87.8D.E8.A1.B0.E5.87.8F">权重衰减</span></h2>
+<p>我们通过添加一个权重衰减项 <img class="tex" alt="\textstyle \frac{\lambda}{2} \sum_{i=1}^k \sum_{j=0}^{n} \theta_{ij}^2" src="./Softmax回归 - Ufldl_files/766dfa7931741fa72672b9093205a850.png"> 来修改代价函数，这个衰减项会惩罚过大的参数值，现在我们的代价函数变为：
+</p>
+<dl><dd><img class="tex" alt="
+\begin{align}
+J(\theta) = - \frac{1}{m} \left[ \sum_{i=1}^{m} \sum_{j=1}^{k} 1\left\{y^{(i)} = j\right\} \log \frac{e^{\theta_j^T x^{(i)}}}{\sum_{l=1}^k e^{ \theta_l^T x^{(i)} }}  \right]
+              + \frac{\lambda}{2} \sum_{i=1}^k \sum_{j=0}^n \theta_{ij}^2
+\end{align}
+" src="./Softmax回归 - Ufldl_files/471592d82c7f51526bb3876c6b0f868d.png">
+</dd></dl>
+<p><br>
+有了这个权重衰减项以后 (<img class="tex" alt="\textstyle \lambda &gt; 0" src="./Softmax回归 - Ufldl_files/e729227a5dc80f9de94e244dc9d6bd20.png">)，代价函数就变成了严格的凸函数，这样就可以保证得到唯一的解了。 此时的 Hessian矩阵变为可逆矩阵，并且因为<img class="tex" alt="\textstyle J(\theta)" src="./Softmax回归 - Ufldl_files/ce027336c1cb3c0cd461406c81369ebf.png">是凸函数，梯度下降法和 L-BFGS 等算法可以保证收敛到全局最优解。
+</p><p><br>
+为了使用优化算法，我们需要求得这个新函数 <img class="tex" alt="\textstyle J(\theta)" src="./Softmax回归 - Ufldl_files/ce027336c1cb3c0cd461406c81369ebf.png"> 的导数，如下：
+</p>
+<dl><dd><img class="tex" alt="
+\begin{align}
+\nabla_{\theta_j} J(\theta) = - \frac{1}{m} \sum_{i=1}^{m}{ \left[ x^{(i)} ( 1\{ y^{(i)} = j\}  - p(y^{(i)} = j | x^{(i)}; \theta) ) \right]  } + \lambda \theta_j
+\end{align}
+" src="./Softmax回归 - Ufldl_files/3afb4b9181a3063ddc639099bc919197.png">
+</dd></dl>
+<p><br>
+通过最小化 <img class="tex" alt="\textstyle J(\theta)" src="./Softmax回归 - Ufldl_files/ce027336c1cb3c0cd461406c81369ebf.png">，我们就能实现一个可用的 softmax 回归模型。
+</p><p><br>
+</p>
+<h2> <span class="mw-headline" id="Softmax.E5.9B.9E.E5.BD.92.E4.B8.8ELogistic_.E5.9B.9E.E5.BD.92.E7.9A.84.E5.85.B3.E7.B3.BB">Softmax回归与Logistic 回归的关系</span></h2>
+<p>当类别数 <img class="tex" alt="\textstyle k = 2" src="./Softmax回归 - Ufldl_files/409483805c4d8c79f734a131d859b9f7.png"> 时，softmax 回归退化为 logistic 回归。这表明 softmax 回归是 logistic 回归的一般形式。具体地说，当 <img class="tex" alt="\textstyle k = 2" src="./Softmax回归 - Ufldl_files/409483805c4d8c79f734a131d859b9f7.png"> 时，softmax 回归的假设函数为：
+</p>
+<dl><dd><img class="tex" alt="
+\begin{align}
+h_\theta(x) &amp;=
+
+\frac{1}{ e^{\theta_1^Tx}  + e^{ \theta_2^T x^{(i)} } }
+\begin{bmatrix}
+e^{ \theta_1^T x } \\
+e^{ \theta_2^T x }
+\end{bmatrix}
+\end{align}
+" src="./Softmax回归 - Ufldl_files/e32efab7bff7353e04775b030af0dae9.png">
+</dd></dl>
+<p><br>
+利用softmax回归参数冗余的特点，我们令 <img class="tex" alt="\textstyle \psi = \theta_1" src="./Softmax回归 - Ufldl_files/5068a95b00ca4021de31c92d1b9265eb.png">，并且从两个参数向量中都减去向量 <img class="tex" alt="\textstyle \theta_1" src="./Softmax回归 - Ufldl_files/f538938bbd1f7000bcc2c9d990d53632.png">，得到:
+</p>
+<dl><dd><img class="tex" alt="
+\begin{align}
+h(x) &amp;=
+
+\frac{1}{ e^{\vec{0}^Tx}  + e^{ (\theta_2-\theta_1)^T x^{(i)} } }
+\begin{bmatrix}
+e^{ \vec{0}^T x } \\
+e^{ (\theta_2-\theta_1)^T x }
+\end{bmatrix} \\
+
+
+&amp;=
+\begin{bmatrix}
+\frac{1}{ 1 + e^{ (\theta_2-\theta_1)^T x^{(i)} } } \\
+\frac{e^{ (\theta_2-\theta_1)^T x }}{ 1 + e^{ (\theta_2-\theta_1)^T x^{(i)} } }
+\end{bmatrix} \\
+
+&amp;=
+\begin{bmatrix}
+\frac{1}{ 1  + e^{ (\theta_2-\theta_1)^T x^{(i)} } } \\
+1 - \frac{1}{ 1  + e^{ (\theta_2-\theta_1)^T x^{(i)} } } \\
+\end{bmatrix}
+\end{align}
+" src="./Softmax回归 - Ufldl_files/b81d6e553283fadddbe29fe55226fb38.png">
+</dd></dl>
+<p><br>
+因此，用 <img class="tex" alt="\textstyle \theta&#39;" src="./Softmax回归 - Ufldl_files/418c4d9ed2c50151474385a534eb3537.png">来表示<img class="tex" alt="\textstyle \theta_2-\theta_1" src="./Softmax回归 - Ufldl_files/f1dd3fd83eddc4b396b62c33c8a637ac.png">，我们就会发现 softmax 回归器预测其中一个类别的概率为 <img class="tex" alt="\textstyle \frac{1}{ 1  + e^{ (\theta&#39;)^T x^{(i)} } }" src="./Softmax回归 - Ufldl_files/b56e13a98d2fe77d4bc5fd0c004befed.png">，另一个类别概率的为 <img class="tex" alt="\textstyle 1 - \frac{1}{ 1 + e^{ (\theta&#39;)^T x^{(i)} } }" src="./Softmax回归 - Ufldl_files/4e3deb50277418cc3eb445aa9aa7ac46.png">，这与 logistic回归是一致的。
+</p><p><br>
+</p>
+<h2> <span class="mw-headline" id="Softmax_.E5.9B.9E.E5.BD.92_vs._k_.E4.B8.AA.E4.BA.8C.E5.85.83.E5.88.86.E7.B1.BB.E5.99.A8">Softmax 回归 vs. k 个二元分类器</span></h2>
+<p>如果你在开发一个音乐分类的应用，需要对k种类型的音乐进行识别，那么是选择使用 softmax 分类器呢，还是使用 logistic 回归算法建立 k 个独立的二元分类器呢？
+</p><p>这一选择取决于你的类别之间是否互斥，例如，如果你有四个类别的音乐，分别为：古典音乐、乡村音乐、摇滚乐和爵士乐，那么你可以假设每个训练样本只会被打上一个标签（即：一首歌只能属于这四种音乐类型的其中一种），此时你应该使用类别数  <span class="texhtml"><i>k</i> = 4</span> 的softmax回归。（如果在你的数据集中，有的歌曲不属于以上四类的其中任何一类，那么你可以添加一个“其他类”，并将类别数 <span class="texhtml"><i>k</i></span> 设为5。）
+</p><p>如果你的四个类别如下：人声音乐、舞曲、影视原声、流行歌曲，那么这些类别之间并不是互斥的。例如：一首歌曲可以来源于影视原声，同时也包含人声 。这种情况下，使用4个二分类的 logistic 回归分类器更为合适。这样，对于每个新的音乐作品 ，我们的算法可以分别判断它是否属于各个类别。
+</p><p>现在我们来看一个计算视觉领域的例子，你的任务是将图像分到三个不同类别中。(i) 假设这三个类别分别是：室内场景、户外城区场景、户外荒野场景。你会使用sofmax回归还是 3个logistic 回归分类器呢？ (ii) 现在假设这三个类别分别是室内场景、黑白图片、包含人物的图片，你又会选择 softmax 回归还是多个 logistic 回归分类器呢？
+</p><p>在第一个例子中，三个类别是互斥的，因此更适于选择softmax回归分类器 。而在第二个例子中，建立三个独立的 logistic回归分类器更加合适。
+</p><p><br>
+</p>
+<h2> <span class="mw-headline" id=".E4.B8.AD.E8.8B.B1.E6.96.87.E5.AF.B9.E7.85.A7">中英文对照</span></h2>
+<dl><dd>Softmax回归   Softmax Regression
+</dd><dd>有监督学习   supervised learning
+</dd><dd>无监督学习   unsupervised learning
+</dd><dd>深度学习   deep learning
+</dd><dd>logistic回归   logistic regression
+</dd><dd>截距项   intercept term
+</dd><dd>二元分类   binary classification
+</dd><dd>类型标记 class labels
+</dd><dd>估值函数/估计值 hypothesis
+</dd><dd>代价函数  cost function
+</dd><dd>多元分类  multi-class classification
+</dd><dd>权重衰减   weight decay
+</dd></dl>
+<p><br>
+</p>
+<h2> <span class="mw-headline" id=".E4.B8.AD.E6.96.87.E8.AF.91.E8.80.85">中文译者</span></h2>
+<p>曾俊瑀（knighterzjy@gmail.com）, 王方（fangkey@gmail.com），王文中（wangwenzhong@ymail.com）
+</p><p><br>
+</p>
+<div style="text-align: center;font-size:small;background-color: #eeeeee; border-style: solid; border-width: 1px; padding: 5px">
+<p><strong class="selflink">Softmax回归</strong> | <a href="http://deeplearning.stanford.edu/wiki/index.php/Exercise:Softmax_Regression" title="Exercise:Softmax Regression">Exercise:Softmax Regression</a>
+</p>
+</div>
+<p><br>
+</p>
+<div style="text-align: left;font-size:small;background-color: #eeeeee; border-style: solid; border-width: 1px; padding: 5px">
+<p>Language&nbsp;: <a href="http://deeplearning.stanford.edu/wiki/index.php/Softmax_Regression" title="Softmax Regression">English</a>
+</p>
+</div>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 940/1000000
+Post-expand include size: 362/2097152 bytes
+Template argument size: 25/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key wikidb:pcache:idhash:484-0!1!0!!en!2!edit=0 and timestamp 20180731055238 -->
+<div class="printfooter">
+Retrieved from "<a href="http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92">http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92</a>"</div>
+		<div id="catlinks" class="catlinks catlinks-allhidden"></div>		<!-- end content -->
+				<div class="visualClear"></div>
+	</div>
+</div></div>
+<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+				 <li id="ca-nstab-main" class="selected"><a href="http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92" title="View the content page [alt-c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://deeplearning.stanford.edu/wiki/index.php?title=Talk:Softmax%E5%9B%9E%E5%BD%92&amp;action=edit&amp;redlink=1" title="Discussion about the content page [alt-t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-viewsource"><a href="http://deeplearning.stanford.edu/wiki/index.php?title=Softmax%E5%9B%9E%E5%BD%92&amp;action=edit" title="This page is protected.
+You can view its source [alt-e]" accesskey="e">View source</a></li>
+				 <li id="ca-history"><a href="http://deeplearning.stanford.edu/wiki/index.php?title=Softmax%E5%9B%9E%E5%BD%92&amp;action=history" title="Past revisions of this page [alt-h]" accesskey="h">History</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="http://deeplearning.stanford.edu/wiki/index.php?title=Special:UserLogin&amp;returnto=Softmax%E5%9B%9E%E5%BD%92" title="You are encouraged to log in; however, it is not mandatory [alt-o]" accesskey="o">Log in</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(/wiki/skins/common/images/dolphin-openclipart.png);" href="http://deeplearning.stanford.edu/wiki/index.php/Main_Page" title="Visit the main page"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class="generated-sidebar portlet" id="p-ufldl_resources">
+		<h5>ufldl resources</h5>
+		<div class="pBody">
+			<ul>
+				<li id="n-UFLDL-Tutorial"><a href="http://deeplearning.stanford.edu/wiki/index.php/UFLDL_Tutorial">UFLDL Tutorial</a></li>
+				<li id="n-Recommended-Readings"><a href="http://deeplearning.stanford.edu/wiki/index.php/UFLDL_Recommended_Readings">Recommended Readings</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-wiki">
+		<h5>wiki</h5>
+		<div class="pBody">
+			<ul>
+				<li id="n-mainpage-description"><a href="http://deeplearning.stanford.edu/wiki/index.php/Main_Page" title="Visit the main page [alt-z]" accesskey="z">Main page</a></li>
+				<li id="n-recentchanges"><a href="http://deeplearning.stanford.edu/wiki/index.php/Special:RecentChanges" title="The list of recent changes in the wiki [alt-r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="http://deeplearning.stanford.edu/wiki/index.php/Special:Random" title="Load a random page [alt-x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="http://deeplearning.stanford.edu/wiki/index.php/Help:Contents" title="The place to find out">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://deeplearning.stanford.edu/wiki/index.php" id="searchform">
+				<input type="hidden" name="title" value="Special:Search">
+				<input id="searchInput" title="Search Ufldl" accesskey="f" type="search" name="search">
+				<input type="submit" name="go" class="searchButton" id="searchGoButton" value="Go" title="Go to a page with this exact name if exists">&nbsp;
+				<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text">
+			</form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="http://deeplearning.stanford.edu/wiki/index.php/Special:WhatLinksHere/Softmax%E5%9B%9E%E5%BD%92" title="List of all wiki pages that link here [alt-j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="http://deeplearning.stanford.edu/wiki/index.php/Special:RecentChangesLinked/Softmax%E5%9B%9E%E5%BD%92" title="Recent changes in pages linked from this page [alt-k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="http://deeplearning.stanford.edu/wiki/index.php/Special:SpecialPages" title="List of all special pages [alt-q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://deeplearning.stanford.edu/wiki/index.php?title=Softmax%E5%9B%9E%E5%BD%92&amp;printable=yes" rel="alternate" title="Printable version of this page [alt-p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://deeplearning.stanford.edu/wiki/index.php?title=Softmax%E5%9B%9E%E5%BD%92&amp;oldid=2360" title="Permanent link to this revision of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+</div><!-- end of the left (by default at least) column -->
+<div class="visualClear"></div>
+<div id="footer">
+	<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="./Softmax回归 - Ufldl_files/poweredby_mediawiki_88x31.png" height="31" width="88" alt="Powered by MediaWiki"></a></div>
+	<ul id="f-list">
+		<li id="lastmod"> This page was last modified on 8 April 2013, at 05:38.</li>
+		<li id="viewcount">This page has been accessed 463,107 times.</li>
+		<li id="privacy"><a href="http://deeplearning.stanford.edu/wiki/index.php/Ufldl:Privacy_policy" title="Ufldl:Privacy policy">Privacy policy</a></li>
+		<li id="about"><a href="http://deeplearning.stanford.edu/wiki/index.php/Ufldl:About" title="Ufldl:About">About Ufldl</a></li>
+		<li id="disclaimer"><a href="http://deeplearning.stanford.edu/wiki/index.php/Ufldl:General_disclaimer" title="Ufldl:General disclaimer">Disclaimers</a></li>
+	</ul>
+</div>
+</div>
+
+<script>if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.141 secs. -->
+<div id="cntvlive2-is-installed"></div></body></html>
