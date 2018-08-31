@@ -1,4 +1,4 @@
-## 知识补充
+知识补充
 
 ### 浏览器浏览网页的基本过程
 
@@ -280,7 +280,7 @@ urlpatterns = [
 
 * 在**APP根目录**创建名为`Templates`的目录,在该目录下 **创建以APP名为名称的目录**,在该目录下创建HTML文件
 
-  ![](http://ww1.sinaimg.cn/large/0077h8xtly1fupp6l1e7oj309t0hzq42.jpg)
+  ![](http://ww1.sinaimg.cn/large/0077h8xtly1fuqbp4jwd5j30970djq3k.jpg)
 
 * 在views.py返回`render(request,template_name,dict)` *翻译为渲染*
 
@@ -296,7 +296,7 @@ urlpatterns = [
       # return HttpResponse('Hello world111',)
       return render(
           request,
-          'index.html',
+          'blog/index.html',
           {'hello': 'Hello Blog! This value comes from dict'}
       )
   
@@ -330,12 +330,26 @@ urlpatterns = [
 ### 创建模型
 
 * 在**APP应用根目录**下创建`models.py`,引入`models`模块
+
   * `from django.db import models`
 
-* 创建类,继承`models.Model`,该类即是一张数据表
+* 创建类,继承`models.Model`,该类即是一张**数据表**,与数据库对应
+
+
 * 在类中创建字段
   * `attr = models.CharField(max_length=64)`
   * 具体的字段属性如`TextField`去django models的文档看
+
+  ```python
+  #blog / models.py
+  from __future__ import unicode_literals
+  from django.db import models
+    
+  class Article(models.Model):
+  	title = models.CharField(max_length=32,default='Title')
+      content = models.TextField(null=True)
+  ```
+
 
 ### 生成数据表
 
@@ -347,8 +361,34 @@ urlpatterns = [
 **查看生成信息:**
 
 * 查看生成的数据表: Django在`app/migrations`目录下生成移植文件
+
+  ```python
+  # blog / migrations / 0001_initial.py
+  class Migration(migrations.Migration):
+  
+      initial = True
+  
+      dependencies = [
+      ]
+  
+      operations = [
+          migrations.CreateModel(
+              name='Article',
+              fields=[
+                  # 由于我们的models没有创建主键字段(参数primary_key=True),自动生成一个id主键
+                  ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                  ('title', models.CharField(default='Title', max_length=32)),
+                  ('content', models.TextField(null=True)),
+              ],
+          ),
+      ]
+  
+  ```
+
 * 查看SQL语句: `python manage.py sqlmigrate 应用名 文件id`
+
   * e.g. `python manage.py sqlmigrate blog 0001`
+
 * 默认的sqlite3的数据库生成在项目根目录下的 `db.sqlite3`
 
 
@@ -356,5 +396,142 @@ urlpatterns = [
 ### 页面呈现数据
 
 * `views.py`中 `import models`
+
 * `article = models.Article.objects.get(pk=1)` 从数据库中获取model对象 ,参数是主键
-* `render(request,page,{'article' :article})`通过模板传送到前端
+
+* `render(request,page,{'article' :article})`通过模板传送model对象到前端
+
+  ```python
+  # blog / views.py
+  from django.shortcuts import render
+  from django.http import HttpResponse
+  
+  from . import models
+  
+  def index(request):
+      article = models.Article.objects.get(pk=1) # 从数据库中查询获取model对象
+  
+      return render(
+          request,
+          'blog/index.html',
+          {'article': article}
+      )
+  
+  ```
+
+* 在前端HTML通过`{{article.title}}`调用
+
+  ```html
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Title</title>
+  </head>
+  <body>
+  {#数据来自views对请求的处理函数的参数#}
+  <h1>{{ article.title }}</h1>
+  <h3>{{ article.content }}</h3>
+  </body>
+  </html>
+  ```
+
+
+## Admin
+
+### 基本介绍
+
+* Admin是Django自带的一个强大的 **自动化数据管理界面**
+* 被授权的用户可以直接在Admin中 **操作数据库**
+
+### 配置Admin
+
+* 创建超级用户 : `python manage.py createsuperuser`
+* Admin入口: `localhost:8000/admin`
+  * 修改setting.py中`LANGUAGE_CODE = ‘zh_Hans’`可以把这个管理页面改为中文
+
+### 配置应用
+
+授权用户登录admin界面后,可以 **操作配置过的应用的数据库,即该应用的model对应的数据库**
+
+* 在 **应用目录下** `admin.py`引入自身的`models`模块
+* 在admin.py 注册model:  `admin.site.register(models.Article)`
+
+
+
+### 修改数据默认显示名称
+
+界面默认显示的是model对象信息,这样就很不方便  
+
+我们希望能直接显示对象的域的信息,比如标题,内容等![](http://ww1.sinaimg.cn/large/0077h8xtly1fuqdbvz3e7j30bn04paa3.jpg)
+
+
+
+**步骤**
+
+* 在model类的`Article`类下添加方法
+
+  * py3: `__str__(self)`
+  * py2: `__unicode_(self)`
+  * `return self.title`
+
+  ```python
+  # blog  / models.py
+  from __future__ import unicode_literals
+  from django.db import models
+  
+  class Article(models.Model):
+      title = models.CharField(max_length=32,default='Title')
+      content = models.TextField(null=True)
+  
+      def __str__(self):
+          return self.title
+  ```
+
+  修改后就可以了
+
+
+
+  ![](http://ww1.sinaimg.cn/large/0077h8xtly1fuqdhm6ggtj30a807e74e.jpg)
+
+### 进阶: 使界面显示更多的信息
+
+1. 在admin.py中创建admin配置类
+
+   `classArticleAdmin(admin.ModelAdmin)`
+
+2. 注册 `admin.site.register(Article,ArticleAdmin)`
+
+3. 定义类成员变量显示其它字段信息: `list_display = ('title','content')`
+
+```python
+from django.contrib import admin
+from blog.models import Article
+
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ('title','content')
+
+admin.site.register(Article,ArticleAdmin)
+```
+
+### 过滤器
+
+在admin的配置类中添加成员变量`list_filter = ('xxx字段名称' , )`,然后就会自动在admin网页出现过滤器选项
+
+* 注意加逗号
+
+```python
+from django.contrib import admin
+from blog.models import Article
+
+
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ('title', 'content', 'pub_time')
+    list_filter = ('pub_time',)
+
+
+admin.site.register(Article, ArticleAdmin)
+```
+
+![](http://ww1.sinaimg.cn/large/0077h8xtly1furppeb1uhj30b90bmt8w.jpg)
+
