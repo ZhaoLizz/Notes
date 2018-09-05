@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<!-- saved from url=(0026)http://www.siar.me/post/9/ -->
+<html class=" js csstransitions"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Black &amp; White</title>
+
+    <!-- meta -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="./配置好后自动启动web服务_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./配置好后自动启动web服务_files/ionicons.min.css">
+    <link rel="stylesheet" href="./配置好后自动启动web服务_files/pace.css">
+    <link rel="stylesheet" href="./配置好后自动启动web服务_files/custom.css">
+    <link rel="stylesheet" href="./配置好后自动启动web服务_files/github.css">
+
+    <!-- style -->
+    <style>
+        span.highlighted {
+            color: red;
+        }
+    </style>
+    <!-- js -->
+    <script src="./配置好后自动启动web服务_files/jquery-2.1.3.min.js.下载"></script><style type="text/css" abt="234"></style>
+    <script src="./配置好后自动启动web服务_files/bootstrap.min.js.下载"></script>
+    <script src="./配置好后自动启动web服务_files/pace.min.js.下载"></script>
+    <script src="./配置好后自动启动web服务_files/modernizr.custom.js.下载"></script><script type="text/javascript" id="__z_" src="./配置好后自动启动web服务_files/x.js.下载"></script><script src="./配置好后自动启动web服务_files/modernizr.custom.js(1).下载"></script>
+<script>//remove 17173 video ad
+doAdblock();
+function doAdblock(){
+    (function() {
+        function A() {}
+        A.prototype = {
+            rules: {
+                '17173_in':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_in_20150522.swf"
+                },
+                '17173_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_out_20150522.swf"
+                },
+                '17173_live':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_stream_20150522.swf"
+                },
+                '17173_live_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173.out.Live.swf"
+                }
+            },
+            _done: null,
+            get done() {
+                if(!this._done) {
+                    this._done = new Array();
+                }
+                return this._done;
+            },
+            addAnimations: function() {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            },
+            animationsHandler: function(e) {
+                if(e.animationName === 'playerInserted') {
+                    this.replace(e.target);
+                }
+            },
+            replace: function(elem) {
+                if(this.done.indexOf(elem) != -1) return;
+                this.done.push(elem);
+                var player = elem.data || elem.src;
+                if(!player) return;
+                var i, find, replace = false;
+                for(i in this.rules) {
+                    find = this.rules[i]['find'];
+                    if(find.test(player)) {
+                        replace = this.rules[i]['replace'];
+                        if('function' === typeof this.rules[i]['preHandle']) {
+                            this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                        }else{
+                            this.reallyReplace.bind(this, elem, find, replace)();
+                        }
+                        break;
+                    }
+                }
+            },
+            reallyReplace: function(elem, find, replace) {
+                elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+                var b = elem.querySelector("param[name='movie']");
+                this.reloadPlugin(elem);
+            },
+            reloadPlugin: function(elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                var newElem = elem.cloneNode(true);
+                this.done.push(newElem);
+                if(nextSibling) {
+                    parentNode.insertBefore(newElem, nextSibling);
+                } else {
+                    parentNode.appendChild(newElem);
+                }
+            },
+            init: function() {
+                var handler = this.animationsHandler.bind(this);
+                document.body.addEventListener('webkitAnimationStart', handler, false);
+                document.body.addEventListener('msAnimationStart', handler, false);
+                document.body.addEventListener('oAnimationStart', handler, false);
+                document.body.addEventListener('animationstart', handler, false);
+                this.addAnimations();
+            }
+        };
+        new A().init();
+    })();
+}
+//remove baidu search ad
+if(document.URL.indexOf('www.baidu.com') >= 0){
+    if(document && document.getElementsByTagName && document.getElementById && document.body){
+        var aa = function(){
+            var all = document.body.querySelectorAll("#content_left div,#content_left table");
+            for(var i = 0; i < all.length; i++){
+                if(/display:\s?(table|block)\s!important/.test(all[i].getAttribute("style"))){all[i].style.display= "none";all[i].style.visibility='hidden';}
+            }
+            all = document.body.querySelectorAll('.result.c-container[id="1"]');
+            //if(all.length == 1) return;
+            for(var i = 0; i < all.length; i++){
+                if(all[i].innerHTML && all[i].innerHTML.indexOf('广告')>-1){
+                    all[i].style.display= "none";all[i].style.visibility='hidden';
+                }
+            }
+        }
+        aa();
+        document.getElementById('wrapper_wrapper').addEventListener('DOMSubtreeModified',aa)
+    };
+}
+//remove sohu video ad
+if (document.URL.indexOf("tv.sohu.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+//remove 56.com video ad
+if (document.URL.indexOf("56.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+//fore iqiyi enable html5 player function
+if (document.URL.indexOf("iqiyi.com") >= 0){
+    if (document.cookie.indexOf("player_forcedType=h5_VOD")==-1){
+        document.cookie='player_forcedType=h5_VOD'
+        if(localStorage.reloadTime && Date.now() - parseInt(localStorage.reloadTime)<60000){
+            console.log('no reload')
+        }else{
+            location.reload()
+            localStorage.reloadTime = Date.now();
+        }
+    }
+}
+</script><style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head>
+
+<body class="  pace-done"><div id="StayFocusd-infobar" style="display: none; top: 1000px;">
+    <img src="chrome-extension://laankejkbhbdhmipfmgcngdelahlfoji/common/img/eye_19x19_red.png">
+    <span id="StayFocusd-infobar-msg"></span>
+    <span id="StayFocusd-infobar-links">
+        <a id="StayFocusd-infobar-never-show">hide forever</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a id="StayFocusd-infobar-hide">hide once</a>
+    </span>
+</div><div class="pace  pace-inactive"><div class="pace-progress" data-progress-text="100%" data-progress="99" style="width: 100%;">
+  <div class="pace-progress-inner"></div>
+</div>
+<div class="pace-activity"></div></div>
+<script src="./配置好后自动启动web服务_files/canvas-nest.min.js.下载"></script><canvas id="c_n7" width="1279" height="573" style="position: fixed; top: 0px; left: 0px; z-index: -1; opacity: 1.5;"></canvas>
+<div class="container">
+    <header id="site-header">
+        <div class="row">
+            <div class="col-md-4 col-sm-5 col-xs-8">
+                <div class="logo">
+                    <h1><a href="http://www.siar.me/"><b>Black</b> &amp; White</a></h1>
+                </div>
+            </div><!-- col-md-4 -->
+            <div class="col-md-8 col-sm-7 col-xs-4">
+                <nav class="main-nav" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" id="trigger-overlay" class="navbar-toggle">
+                            <span class="ion-navicon"></span>
+                        </button>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="cl-effect-11"><a href="http://www.siar.me/" data-hover="首页">首页</a></li>
+                            <li class="cl-effect-11"><a href="http://www.siar.me/post/9/full-width.html" data-hover="博客">博客</a></li>
+                            <li class="cl-effect-11"><a href="http://www.siar.me/post/9/about.html" data-hover="关于">关于</a></li>
+                            <li class="cl-effect-11"><a href="http://www.siar.me/post/9/contact.html" data-hover="联系">联系</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </nav>
+                <div id="header-search-box">
+                    <a id="search-menu" href="http://www.siar.me/post/9/#"><span id="search-icon" class="ion-ios-search-strong"></span></a>
+                    <div id="search-form" class="search-form">
+                        <form role="search" method="get" id="searchform" action="http://www.siar.me/search/">
+                            <input type="search" name="q" placeholder="搜索" required="">
+                            <button type="submit"><span class="ion-ios-search-strong"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- col-md-8 -->
+        </div>
+    </header>
+</div>
+<div class="copyrights">Collect from <a href="http://www.cssmoban.com/">网页模板</a></div>
+<div class="copyrights">Modified by <a href="http://zmrenwu.com/">追梦人物的博客</a></div>
+
+<div class="content-body">
+    <div class="container">
+        <div class="row">
+            <main class="col-md-8">
+                
+                <article class="post post-9">
+                    <header class="entry-header">
+                        <h1 class="entry-title">
+                            <a href="http://www.siar.me/post/9/">自动启动gunicorn说明</a>
+                        </h1>
+                        <div class="entry-meta">
+                            <span class="post-category"><a href="http://www.siar.me/category/1/">Django</a></span>
+                            <span class="post-date"><a href="http://www.siar.me/post/9/"><time class="entry-date" datetime="2017年8月6日 11:58">2017年8月6日 11:58</time></a></span>
+                            <span class="post-author"><a href="http://www.siar.me/post/9/#">pearl</a></span>
+                            <span class="comments-link"><a href="http://www.siar.me/post/9/#comment-area">25 评论</a></span>
+                            <span class="views-count"><a href="http://www.siar.me/post/9/">2029 阅读</a></span>
+                        </div>
+                    </header>
+                    <div class="entry-content clearfix">
+                        <!--文章内容-->
+                        <h1 id="自动启动gunicorn说明">自动启动gunicorn说明</h1>
+<p>博主原帖：
+<a href="http://zmrenwu.com/post/20/">14 - 使用 Nginx 和 Gunicorn 部署 Django 博客</a>我看评论里面博主用的是Ubuntu 14的系统，所以可以用upstart的方式写脚本自动启动gunicorn，而在Ubuntu 16系统中已经没有upstart了，而是采用的systemd的方式。我参考了评论里面_CindyL_的接<a href="https://wiki.ubuntu.com/SystemdForUpstartUsers">SystemdForUpstartUsers</a>，搜索了相关的东西，终于把这个自动启动给弄出来了，现在把过程写一下,防止大家再走弯路。</p>
+<ul>
+<li>我用的操作系统是Ubuntu 16.04 LTS，用户是siar，非root用户</li>
+</ul>
+<h2 id="1-新建目录自启动服务文件存放目录">1. 新建目录(自启动服务文件存放目录)</h2>
+<p><code>sudo mkdir -p /usr/lib/systemd/system</code></p>
+<h2 id="2-新建文件自启动的服务文件">2. 新建文件(自启动的服务文件)</h2>
+<p><code>sudo vim /usr/lib/systemd/system/siar.service</code></p>
+<h3 id="21-添加如下内容">2.1 添加如下内容</h3>
+<div class="codehilite"><pre><span></span><span class="o">[</span>Unit<span class="o">]</span>
+<span class="nv">After</span><span class="o">=</span>syslog.target network.target remote-fs.target nss-lookup.target
+<span class="o">[</span>Service<span class="o">]</span>
+<span class="c1"># 你的用户</span>
+<span class="nv">User</span><span class="o">=</span>siar
+<span class="c1"># 你的目录</span>
+<span class="nv">WorkingDirectory</span><span class="o">=</span>/home/siar/sites/django-blog-learning/blogproject
+<span class="c1"># gunicorn启动命令</span>
+<span class="nv">ExecStart</span><span class="o">=</span>/home/siar/sites/env/bin/gunicorn --bind unix:/tmp/siar.socket blogproject.wsgi:application
+<span class="nv">Restart</span><span class="o">=</span>on-failure
+<span class="o">[</span>Install<span class="o">]</span>
+<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</pre></div>
+
+
+<ul>
+<li>有一些参数我也不是太懂，具体可以参照下面的<a href="http://www.jinbuguo.com/systemd/systemd.service.html">systemd.service 中文手册</a>链接。</li>
+</ul>
+<h3 id="22-保存并退出">2.2 保存并退出</h3>
+<p><code>:wq</code></p>
+<h2 id="3-启动服务">3. 启动服务</h2>
+<p><code>sudo systemctl start siar</code></p>
+<ul>
+<li>我的文件名是siar.service,所以就<code>sudo systemctl start siar</code></li>
+</ul>
+<h2 id="4-添加服务到开机自动运行">4. 添加服务到开机自动运行</h2>
+<p><code>sudo systemctl enable siar.service</code></p>
+<h2 id="5-验证启动">5. 验证启动</h2>
+<p><code>ps -ef | grep gunicorn</code></p>
+<ul>
+<li>查看<code>gunicorn</code>是否已经启动，有两个进程。</li>
+</ul>
+<h2 id="6-参考链接">6. 参考链接</h2>
+<ul>
+<li><a href="https://wiki.ubuntu.com/SystemdForUpstartUsers">SystemdForUpstartUsers</a></li>
+<li><a href="http://www.jinbuguo.com/systemd/systemd.service.html">systemd.service 中文手册</a></li>
+<li><a href="http://www.zhimengzhe.com/linux/302083.html">Ubuntu 16.04 增加bash脚本为service，开机自启服务脚本配置</a></li>
+<li><a href="https://segmentfault.com/a/1190000009590101">用 systemd 配置一个简单的自动重启服务</a></li>
+</ul>
+                        <div class="widget-tag-cloud">
+                            <ul>
+                                标签：
+                                
+                                    <li><a href="http://www.siar.me/tag/5/">#Django</a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+                <section class="comment-area" id="comment-area">
+                    <hr>
+                    <h3>发表评论</h3>
+                    <form action="http://www.siar.me/comment/post/9/" method="post" class="comment-form">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="zM77xmmgo4B0rnt8z7sVJSekiOP6ggZb9xJbKYzumD9m2lVUNvDolENUB60itre9">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label for="id_name">名字：</label>
+                          <input id="id_name" maxlength="100" name="name" type="text" required="">
+                          
+                        </div>
+                        <div class="col-md-4">
+                          <label for="id_email">邮箱：</label>
+                          <input id="id_email" maxlength="255" name="email" type="email" required="">
+                          
+                        </div>
+                        <div class="col-md-4">
+                          <label for="id_url">URL：</label>
+                          <input id="id_url" maxlength="200" name="url" type="url">
+                          
+                        </div>
+                        <div class="col-md-12">
+                          <label for="id_text">评论：</label>
+                          <textarea cols="40" id="id_text" name="text" rows="10" required=""></textarea>
+                          
+                          <button type="submit" class="comment-btn">发表</button>
+                        </div>
+                      </div>    <!-- row -->
+                    </form>
+                    <div class="comment-list-panel">
+                        <a href="http://www.siar.me/post/9/#comment-area"></a>
+                        <h3>评论列表，共 <span>25</span> 条评论</h3>
+                            <ul class="comment-list list-unstyled">
+                              
+                              <li class="comment-item">
+                                <span class="nickname">siar</span>
+                                <time class="submit-date">2017年8月6日 12:29</time>
+                                <div class="text">
+                                  测试
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">姚</span>
+                                <time class="submit-date">2017年8月6日 13:50</time>
+                                <div class="text">
+                                  顶！
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">红九</span>
+                                <time class="submit-date">2017年8月7日 19:00</time>
+                                <div class="text">
+                                  服务开启后，如果系统重启（reboot）则不会自动开启。这脚本是这么设计的吗？
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">红九</span>
+                                <time class="submit-date">2017年8月8日 16:27</time>
+                                <div class="text">
+                                  执行这个命令就可以开机自动运行服务脚本了：systemctl enable xxx.service，感谢博主。
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">justB</span>
+                                <time class="submit-date">2017年8月9日 16:35</time>
+                                <div class="text">
+                                  不错不错，搜藏啦
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">FP</span>
+                                <time class="submit-date">2017年8月28日 15:21</time>
+                                <div class="text">
+                                  不错不错！
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">胡星雨</span>
+                                <time class="submit-date">2017年10月10日 21:44</time>
+                                <div class="text">
+                                  很赞的博客 解决Ubuntu的start脚本问题，谢谢了。
+这个是我的博客http://www.huxingyu.cc/
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">youngxu</span>
+                                <time class="submit-date">2017年10月25日 16:34</time>
+                                <div class="text">
+                                  博主你好，为什么我执行完你上面的所有操作之后不能在浏览器里访问我的域名了
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">python</span>
+                                <time class="submit-date">2017年11月7日 12:56</time>
+                                <div class="text">
+                                  5623232
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">飞机</span>
+                                <time class="submit-date">2017年12月4日 10:14</time>
+                                <div class="text">
+                                  flamingo@iZwz92ma406e6d08vhkwqmZ:~$ sudo systemctl start siar
+sudo: unable to resolve host iZwz92ma406e6d08vhkwqmZ
+Failed to start siar.service: Launch helper exited with unknown return code 1
+See system logs and 'systemctl status siar.service' for details.
+
+想问下博主这个怎么解决 启动服务后就这样报错？？
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">williezh</span>
+                                <time class="submit-date">2017年12月18日 20:32</time>
+                                <div class="text">
+                                  zan!
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">bgods</span>
+                                <time class="submit-date">2017年12月21日 21:17</time>
+                                <div class="text">
+                                  收藏了，正好用Ubuntu16.04
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">anderson</span>
+                                <time class="submit-date">2017年12月26日 22:28</time>
+                                <div class="text">
+                                  留名
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">sodaling</span>
+                                <time class="submit-date">2018年1月5日 00:42</time>
+                                <div class="text">
+                                  求指教，这样的确可以开机运行服务了。但是这样的话保存博文会出现问题，出现500错误，请问是为什么呢
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">g'g</span>
+                                <time class="submit-date">2018年1月25日 23:32</time>
+                                <div class="text">
+                                  那么自动化部署那个部分，restart gunicorn 那部分也没有restart这个命令怎么解决的呢博主？
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">Eli</span>
+                                <time class="submit-date">2018年1月26日 09:43</time>
+                                <div class="text">
+                                  ps -ef | grep gunicorn
+发现gunicorn的两个进程后kill掉
+
+重复上述过程两次：也就是kill两次
+发现无法重启gunicorn服务
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">eli</span>
+                                <time class="submit-date">2018年1月26日 15:15</time>
+                                <div class="text">
+                                  请问您一下：
+对于这种自动重启的服务，
+代码更新之后
+如果手动重启呢
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">eli</span>
+                                <time class="submit-date">2018年1月26日 15:16</time>
+                                <div class="text">
+                                  请问您一下：
+对于这种自动重启的服务，
+代码更新之后
+如果手动重启呢
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">takkum</span>
+                                <time class="submit-date">2018年2月2日 19:59</time>
+                                <div class="text">
+                                  楼主，我也是非root用户，但是在写Nginx的配置文件时，提示我E212 can't open file for writing 你知道怎么解决吗
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">StarOcean</span>
+                                <time class="submit-date">2018年4月6日 11:30</time>
+                                <div class="text">
+                                  工作目录是不是在/home/siar/sites/django-blog-learning，我刚开始不能启动，然后我改到/home/siar/sites/django-blog-learning这里就好了
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">StarOcean</span>
+                                <time class="submit-date">2018年4月6日 11:30</time>
+                                <div class="text">
+                                  工作目录是不是在/home/siar/sites/django-blog-learning，我刚开始不能启动，然后我改到/home/siar/sites/django-blog-learning这里就好了
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">感谢博主分享</span>
+                                <time class="submit-date">2018年5月1日 13:26</time>
+                                <div class="text">
+                                  如果是从追梦人哪里过来的，建议把exec-start改成
+/home/wanggq/sites/xxxxxxx.site/env/bin/gunicorn --bind unix:/tmp/xxxxxxxx.site socket newsite.wsgi:application
+
+（wanggq和xxxxxxxx.site因人而异，懂的自然懂）
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">michael</span>
+                                <time class="submit-date">2018年5月18日 17:31</time>
+                                <div class="text">
+                                  启动不了……
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">michael</span>
+                                <time class="submit-date">2018年5月18日 17:41</time>
+                                <div class="text">
+                                  好了，服务改个名字。
+                                </div>
+                              </li>
+                              
+                              <li class="comment-item">
+                                <span class="nickname">a</span>
+                                <time class="submit-date">2018年6月13日 11:42</time>
+                                <div class="text">
+                                  启动服务应该是
+sudo systemctl start siar.service
+                                </div>
+                              </li>
+                              
+                            </ul>
+                    </div>
+                </section>
+
+            </main>
+            <aside class="col-md-4">
+                
+    <div class="widget widget-content">
+        <h3 class="widget-title">文章目录</h3>
+        <!-- safe标签防止Django对HTML代码进行转义-->
+        <div class="toc">
+<ul>
+<li><a href="http://www.siar.me/post/9/#%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8gunicorn%E8%AF%B4%E6%98%8E">自动启动gunicorn说明</a><ul>
+<li><a href="http://www.siar.me/post/9/#1-%E6%96%B0%E5%BB%BA%E7%9B%AE%E5%BD%95%E8%87%AA%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1%E6%96%87%E4%BB%B6%E5%AD%98%E6%94%BE%E7%9B%AE%E5%BD%95">1. 新建目录(自启动服务文件存放目录)</a></li>
+<li><a href="http://www.siar.me/post/9/#2-%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E8%87%AA%E5%90%AF%E5%8A%A8%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%96%87%E4%BB%B6">2. 新建文件(自启动的服务文件)</a><ul>
+<li><a href="http://www.siar.me/post/9/#21-%E6%B7%BB%E5%8A%A0%E5%A6%82%E4%B8%8B%E5%86%85%E5%AE%B9">2.1 添加如下内容</a></li>
+<li><a href="http://www.siar.me/post/9/#22-%E4%BF%9D%E5%AD%98%E5%B9%B6%E9%80%80%E5%87%BA">2.2 保存并退出</a></li>
+</ul>
+</li>
+<li><a href="http://www.siar.me/post/9/#3-%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1">3. 启动服务</a></li>
+<li><a href="http://www.siar.me/post/9/#4-%E6%B7%BB%E5%8A%A0%E6%9C%8D%E5%8A%A1%E5%88%B0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E8%BF%90%E8%A1%8C">4. 添加服务到开机自动运行</a></li>
+<li><a href="http://www.siar.me/post/9/#5-%E9%AA%8C%E8%AF%81%E5%90%AF%E5%8A%A8">5. 验证启动</a></li>
+<li><a href="http://www.siar.me/post/9/#6-%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5">6. 参考链接</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </div>
+
+                 <div class="widget widget-recent-posts">
+                    <h3 class="widget-title">最新文章</h3>
+                    
+                    <ul>
+                        
+                            <li>
+                                <a href="http://www.siar.me/post/9/">自动启动gunicorn说明</a>
+                            </li>
+                        
+                            <li>
+                                <a href="http://www.siar.me/post/8/">Markdown 目录测试</a>
+                            </li>
+                        
+                            <li>
+                                <a href="http://www.siar.me/post/7/">于简单处安放自己</a>
+                            </li>
+                        
+                            <li>
+                                <a href="http://www.siar.me/post/6/">守你初心，静度安然时光</a>
+                            </li>
+                        
+                            <li>
+                                <a href="http://www.siar.me/post/4/">起风了</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+
+                 <div class="widget widget-archives">
+                    <h3 class="widget-title">归档</h3>
+                     
+                    <ul>
+                        
+                        <li>
+                            <a href="http://www.siar.me/archives/2017/8/">2017 年 8 月</a>
+                        </li>
+                        
+                        <li>
+                            <a href="http://www.siar.me/archives/2017/7/">2017 年 7 月</a>
+                        </li>
+                        
+                        <li>
+                            <a href="http://www.siar.me/archives/2017/6/">2017 年 6 月</a>
+                        </li>
+                        
+                        <li>
+                            <a href="http://www.siar.me/archives/2017/5/">2017 年 5 月</a>
+                        </li>
+                        
+
+                    </ul>
+                </div>
+
+                <div class="widget widget-category">
+                    <h3 class="widget-title">分类</h3>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="http://www.siar.me/category/1/">Django<span class="post-count">(3)</span></a>
+                        </li>
+                        
+                        <li>
+                            <a href="http://www.siar.me/category/2/">Feeling<span class="post-count">(1)</span></a>
+                        </li>
+                        
+                        <li>
+                            <a href="http://www.siar.me/category/3/">Thought<span class="post-count">(3)</span></a>
+                        </li>
+                        
+                    </ul>
+                </div>
+
+                <div class="widget widget-tag-cloud">
+                    <h3 class="widget-title">标签云</h3>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="http://www.siar.me/tag/5/">Django</a>
+                        </li>
+                        
+                        <li>
+                            <a href="http://www.siar.me/tag/6/">Python</a>
+                        </li>
+                        
+                        <li>
+                            <a href="http://www.siar.me/tag/8/">文档</a>
+                        </li>
+                        
+                        <li>
+                            <a href="http://www.siar.me/tag/9/">Java</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+                <div class="rss">
+                    <a href="http://www.siar.me/all/rss/"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer id="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="copyright">© 2017 - 采集自<a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a>
+                    - 由<a href="http://zmrenwu.com/" title="网页模板" target="_blank">追梦人物的博客</a>修改
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Mobile Menu -->
+<div class="overlay overlay-hugeinc">
+    <button type="button" class="overlay-close"><span class="ion-ios-close-empty"></span></button>
+    <nav>
+        <ul>
+            <li><a href="http://www.siar.me/post/9/blog/index.html">首页</a></li>
+            <li><a href="http://www.siar.me/post/9/full-width.html">博客</a></li>
+            <li><a href="http://www.siar.me/post/9/about.html">关于</a></li>
+            <li><a href="http://www.siar.me/post/9/contact.html">联系</a></li>
+        </ul>
+    </nav>
+</div>
+
+<!-- 其他内容 -->
+<!--<script src="js/script.js"></script>-->
+<script src="./配置好后自动启动web服务_files/script.js.下载"></script>
+
+
+<div id="cntvlive2-is-installed"></div></body></html>
