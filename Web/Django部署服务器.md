@@ -1,7 +1,7 @@
 # 利用Nginx和Gunicorn部署Django
 
 * 服务器环境:Ubuntu16.04
-* 参考追梦人物博客: https://www.zmrenwu.com/post/20/#c3124
+* 在追梦人物博客: https://www.zmrenwu.com/post/20/#c3124 的基础上,记录了一些自己踩的坑
 * 记录一下我踩的坑,**仅用作个人笔记**,方便以后配置环境
 
 ## 一.配置服务器
@@ -11,9 +11,6 @@
 * **部署项目一定不能用root用户,否则会出现nginx没有权限访问root用户创建的Django项目的静态文件,导致网页的静态文件加载不出来**
 
 ```bash
-# 在 root 用户下运行这条命令创建一个新用户，yangxg 是用户名
-# 因为我叫杨学光，所以我取的用户名是 yangxg
-# 选择一个你喜欢的用户名，不一定非得和我的相同
 root@localhost:~# useradd -m -s /bin/bash zhaolizhi
 
 # 把新创建的用户加入超级权限组
@@ -170,7 +167,7 @@ python manage.py createsuperuser
 
 ```bash
 # 在/etc/nginx/sites-available/ 下创建一个配置文件,文件名设置为域名
-# /etc/nginx/sites-available/zhaolizhi.xyz
+# vim  /etc/nginx/sites-available/zhaolizhi.xyz
 # 删除/etc/nginx/sites-available/default 文件
 
 server {
@@ -205,7 +202,7 @@ sudo ln -s /etc/nginx/sites-available/zhaolizhi.xyz /etc/nginx/sites-enabled/zha
 pip install gunicorn
 
 # 启动服务器进程
- gunicorn --bind unix:/tmp/zhaolizhi.xyz.socket blogproject.wsgi:application
+gunicorn --bind unix:/tmp/zhaolizhi.xyz.socket  blogproject.wsgi:application
 ```
 
 ### 设置服务器自动启动Gunicorn
